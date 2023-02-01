@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:munit="http://www.mulesoft.org/schema/mule/munit" xmlns:munit-tools="http://www.mulesoft.org/schema/mule/munit-tools"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xsi:schemaLocation="
+		http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+		http://www.mulesoft.org/schema/mule/munit http://www.mulesoft.org/schema/mule/munit/current/mule-munit.xsd
+		http://www.mulesoft.org/schema/mule/munit-tools  http://www.mulesoft.org/schema/mule/munit-tools/current/mule-munit-tools.xsd">
+	<munit:config name="Rest-Connection-Test-to-Mule-suite-GET.xml" />
+	<munit:test name="Rest-Connection-Test-to-Mule-main-test-GET" doc:id="54ab49eb-0249-4e51-ab97-a2ded00614ba" >
+		<munit:behavior >
+			<munit-tools:mock-when doc:name="Mock APIkit Router" doc:id="6d1d3d85-f8a7-46e0-b76d-00d67f8e13d3" processor="apikit:router">
+				<munit-tools:with-attributes >
+					<munit-tools:with-attribute whereValue="22766967-9c3b-4e85-a30c-fd73a0e9223b" attributeName="doc:id" />
+				</munit-tools:with-attributes>
+				<munit-tools:then-return >
+					<munit-tools:payload value="#[output application/json  --- readUrl('classpath://RestConnectionTesttoMulemaintestGET\mock_payload.dwl')]" mediaType="application/json " encoding="UTF-8" />
+					<munit-tools:attributes value="#[readUrl('classpath://RestConnectionTesttoMulemaintestGET\mock_attributes.dwl')]" />
+					<munit-tools:variables >
+						<munit-tools:variable key="outboundHeaders" value="#[readUrl('classpath://RestConnectionTesttoMulemaintestGET\mock_variable_.dwl')]" />
+						<munit-tools:variable key="httpStatus" value="#[readUrl('classpath://RestConnectionTesttoMulemaintestGET\mock_variable_1.dwl')]" />
+						<munit-tools:variable key="prevPayload" value="#[output application/json --- readUrl('classpath://RestConnectionTesttoMulemaintestGET\mock_variable_2.dwl')]" mediaType="application/json" encoding="UTF-8" />
+					</munit-tools:variables>
+				</munit-tools:then-return>
+			</munit-tools:mock-when>
+			<munit:set-event doc:name="Set Input" doc:id="493ae477-886d-4030-b2e0-ac4998355488" >
+				<munit:payload value="#[output application/json  --- readUrl('classpath://RestConnectionTesttoMulemaintestGET\set-event_payload.dwl')]" encoding="UTF-8" mediaType="application/json " />
+				<munit:attributes value="#[readUrl('classpath://RestConnectionTesttoMulemaintestGET\set-event_attributes.dwl')]" />
+			</munit:set-event>
+		</munit:behavior>
+		<munit:execution >
+			<flow-ref doc:name="Flow-ref to Rest-Connection-Test-to-Mule-main" doc:id="987ab0b9-a37c-49a2-bd36-ec12aaafb622" name="Rest-Connection-Test-to-Mule-main"/>
+		</munit:execution>
+		<munit:validation >
+			<munit-tools:assert doc:name="Assert payload" doc:id="ccc0d876-cf36-4166-821a-d5a9a8249116" message="The payload does not match">
+				<munit-tools:that ><![CDATA[#[%dw 2.0
+import RestConnectionTesttoMulemaintestGET::assert_expression_payload
+---
+assert_expression_payload::main({payload: payload, attributes: attributes, vars: vars})]]]></munit-tools:that>
+			</munit-tools:assert>
+		</munit:validation>
+	</munit:test>
+
+
+</mule>

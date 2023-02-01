@@ -1,0 +1,58 @@
+#%RAML 1.0
+title: Rest Connection Test to Mule
+baseUri: http://localhost:8081/mule/v1
+securitySchemes:
+  basic:
+    type: Basic Authentication
+    description: This API Secured by the Basic Authentication
+  
+/Connection-Test:
+  get:
+    description: Connection Test with the get method
+    securedBy: [basic]
+    queryParameters:
+      SysName:
+       required: false    
+       displayName: System Name
+       example:
+            value:  Mule  
+    responses:
+          200:
+                body:
+                      application/json:
+                            example: !include Example/Response_example.raml
+
+
+# It is a post method
+  post:
+    description: Connection Test with post method
+    securedBy: [basic]
+    queryParameters:
+       SysName:
+         required: false
+         displayName: System Name
+         description: System Name
+         example:
+           value: Mule
+    body:
+      application/json:
+        example: !include Example/RequestExample.raml
+          
+    responses:
+      200:
+        body:
+          application/json:
+            example: !include Example/Response_example.raml
+
+             
+      
+           
+          
+
+
+      
+                                    
+
+    
+
+  
